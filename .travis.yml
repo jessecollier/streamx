@@ -6,9 +6,6 @@ addons:
       - oracle-java8-installer
 jdk:
   - oraclejdk8
-script:
-  - jdk_switcher use oraclejdk8
-  - mvn -Dskiptests -Dmaven.test.skip=true clean package
 before_deploy:
   - "./release/tar_libs.sh"
 deploy:
