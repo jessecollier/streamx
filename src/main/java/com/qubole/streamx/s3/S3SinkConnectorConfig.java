@@ -58,8 +58,18 @@ public class S3SinkConnectorConfig extends HdfsSinkConnectorConfig {
   public static final String NAME_DEFAULT = "";
   private static final String NAME_DISPLAY = "Connector Name";
 
+  public static final String AWS_ACCESS_KEY_CONFIG = "aws.access_key";
+  private static final String AWS_ACCESS_KEY_DOC = "Aws Access Key Id";
+  private static final String AWS_ACCESS_KEY_DEFAULT = "";
+
+  public static final String AWS_SECRET_KEY_CONFIG = "aws.secret_key";
+  private static final String AWS_SECRET_KEY_DOC = "Aws SECRET Key Id";
+  private static final String AWS_SECRET_KEY_DEFAULT = "";
+
 
   static {
+    config.define(AWS_ACCESS_KEY_CONFIG, ConfigDef.Type.STRING, AWS_ACCESS_KEY_DEFAULT, ConfigDef.Importance.HIGH, AWS_ACCESS_KEY_DOC);
+    config.define(AWS_SECRET_KEY_CONFIG, ConfigDef.Type.STRING, AWS_SECRET_KEY_DEFAULT, ConfigDef.Importance.HIGH, AWS_SECRET_KEY_DOC);
     config.define(S3_URL_CONFIG, ConfigDef.Type.STRING, ConfigDef.Importance.HIGH, S3_URL_DOC, S3_GROUP, 1, ConfigDef.Width.MEDIUM, S3_URL_DISPLAY);
     config.define(WAL_CLASS_CONFIG, ConfigDef.Type.STRING, WAL_CLASS_DEFAULT, ConfigDef.Importance.LOW, WAL_CLASS_DOC, WAL_GROUP, 1, ConfigDef.Width.MEDIUM, WAL_CLASS_DISPLAY);
     config.define(DB_CONNECTION_URL_CONFIG, ConfigDef.Type.STRING, DB_CONNECTION_URL_DEFAULT, ConfigDef.Importance.LOW, DB_CONNECTION_URL_DOC, WAL_GROUP, 1, ConfigDef.Width.MEDIUM, DB_CONNECTION_URL_DISPLAY);

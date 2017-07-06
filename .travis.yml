@@ -1,0 +1,22 @@
+language: java
+sudo: false
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+jdk:
+  - oraclejdk8
+script:
+  - jdk_switcher use oraclejdk8
+  - mvn -Dskiptests -Dmaven.test.skip=true clean package
+before_deploy:
+  - "./release/tar_libs.sh"
+deploy:
+  provider: releases
+  api_key:
+    secure: tcXihKT4HJtziPFirPnqLyyHaEkncmyk634493zLDV4CEtFp59OFKUzmoJuiu3ylylXs+W/tBr6FncQMJX09Nm8/g/Q5Wnicle9bIEW0MQNzRzNvqIf7/C97whwVZfhRCo/L0fSLHa3DAbfXTsB2zuj20J/Uy3O4K0EDaNgxcd7l5qcDYs4fDOP2p3iCrZrBYc7GHTTQrS11z2xn6I7ZaXmd2vWkJx7MOe+RHg5KOQNU/KKcTYjA/NHV+Nkev+fMwNDXvXXSHsX6ey2zf5kKkD8ISYS+bVjDGSAI2nPLCUYgVOqW5R28Isvg32xjLxKa2smdUaNoYFCd5nw32Onr8lu8eEWcHwYatPuysWrGKxbRym2KCA5nxlK3G/a0IUKDgbf4GU4XOhmK/4JzWBio/irGri80lEc5YecW/vuy9X7/rcJU1S0dQrKxp21QUuxXyLYvhwxqpat2SH0Hhte9k6vy2Vr7aAZd/93JgPXsRMTXLwZ/t3jPZOXVRhwp2pBHsg9p54JXdEoJbDt/9uBfgdY4NkrnMpTEUNQYcGduLmDZjY4FzQRSrhRR70+Ws2pqhvBihu80NDJosazPOm0ZyKLyto+17PkTQhjqBajI9wjMw+HHQ/Ab6AC+QLIdg5IYY9sS54EYwJOE/JlkMirNA6Fs6O6zp0cto3rniEM4tz4=
+  skip_cleanup: true
+  file: streamx-${TRAVIS_TAG}.tar.gz
+  on:
+    tags: true
+    repo: jessecollier/streamx

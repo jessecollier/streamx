@@ -267,7 +267,7 @@ public class HdfsSinkConnectorConfig extends AbstractConfig {
   protected static ConfigDef config = new ConfigDef();
 
   static {
-
+    
     // Define HDFS configuration group
     config.define(HDFS_URL_CONFIG, Type.STRING, HDFS_URL_DEFAULT, Importance.HIGH, HDFS_URL_DOC, HDFS_GROUP, 1, Width.MEDIUM, HDFS_URL_DISPLAY)
         .define(HADOOP_CONF_DIR_CONFIG, Type.STRING, HADOOP_CONF_DIR_DEFAULT, Importance.HIGH, HADOOP_CONF_DIR_DOC, HDFS_GROUP, 2, Width.MEDIUM, HADOOP_CONF_DIR_DISPLAY)

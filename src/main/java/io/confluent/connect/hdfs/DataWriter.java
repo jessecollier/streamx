@@ -91,13 +91,25 @@ public class DataWriter {
       this.avroData = avroData;
       this.context = context;
 
-      String hadoopConfDir = connectorConfig.getString(HdfsSinkConnectorConfig.HADOOP_CONF_DIR_CONFIG);
+      String hadoopConfDir = String.valueOf(System.getenv("MESOS_SANDBOX"));
       log.info("Hadoop configuration directory {}", hadoopConfDir);
       conf = new Configuration();
-      if (!hadoopConfDir.equals("")) {
-        conf.addResource(new Path(hadoopConfDir + "/core-site.xml"));
-        conf.addResource(new Path(hadoopConfDir + "/hdfs-site.xml"));
+      if (!hadoopConfDir.equals("null")) {
+        conf.addResource(new Path(hadoopConfDir + "config/core-site.xml"));
+        conf.addResource(new Path(hadoopConfDir + "config/hdfs-site.xml"));
       }
+
+      conf.set("fs.s3.impl","org.apache.hadoop.fs.s3native.NativeS3FileSystem");
+
+      String aws_access_key_id = System.getenv("AWS_ACCESS_KEY_ID");
+      String aws_secret_key = System.getenv("AWS_SECRET_KEY");
+
+      conf.set("fs.s3a.access.key",  aws_access_key_id);
+      conf.set("fs.s3a.secret.key",  aws_secret_key);
+      conf.set("fs.s3.awsAccessKeyId",  aws_access_key_id);
+      conf.set("fs.s3.awsSecretAccessKey",  aws_secret_key);
+      conf.set("fs.s3n.awsAccessKeyId",  aws_access_key_id);
+      conf.set("fs.s3n.awsSecretAccessKey",  aws_secret_key);
 
       boolean secureHadoop = connectorConfig.getBoolean(HdfsSinkConnectorConfig.HDFS_AUTHENTICATION_KERBEROS_CONFIG);
       if (secureHadoop) {
