@@ -94,10 +94,12 @@ public class DataWriter {
       String hadoopConfDir = String.valueOf(System.getenv("MESOS_SANDBOX"));
       log.info("Hadoop configuration directory {}", hadoopConfDir);
       conf = new Configuration();
-      if (hadoopConfDir.equals("null")) {
+      if (!hadoopConfDir.equals("null")) {
         conf.addResource(new Path(hadoopConfDir + "config/core-site.xml"));
         conf.addResource(new Path(hadoopConfDir + "config/hdfs-site.xml"));
       }
+
+      System.out.println("I have a value for fs.s3n.server-side-encryption-algorithm => " + conf.get("fs.s3n.server-side-encryption-algorithm"));
       
       conf.set("fs.s3.impl","org.apache.hadoop.fs.s3native.NativeS3FileSystem");
       conf.set("fs.s3a.access.key",  connectorConfig.getString(S3SinkConnectorConfig.AWS_ACCESS_KEY_CONFIG));
